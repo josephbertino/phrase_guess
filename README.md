@@ -1,11 +1,11 @@
 # phrase_guess
-### Browser-based phrase-guessing game. Like Wheel of Fortune without the wheel.
+### Browser-based phrase-guessing game
 
 Author: Joe Bertino, 2020
 
 ---
 
-Play "Phrase Hunter", the browser-based word guessing game! Built with Javascript and OOP, this game offers the user a hidden phrase. The user must guess the letters that compose the phrase. If they guess five wrong letters before completing the phrase, they lose the round. Don't fear though---the user will always be offered another chance to play!
+Play "Phrase Hunter", the browser-based word guessing game! Built with Javascript and OOP, this game offers the user a hidden phrase to be guessed by the user. The user must guess the letters that compose the phrase. If they guess five wrong letters before completing the phrase, they lose the round. Don't fear though---the user will always be offered another chance to play!
 
 ---
 

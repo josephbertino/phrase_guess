@@ -58,11 +58,11 @@ class Game {
             this.activePhrase.showMatchedLetter(letter); 
             if (this.checkForWin()) {
                 console.log('you win');
-                // this.gameOver(); // JBJB
+                this.gameOver();
             }
         } else {
-            // button.classList.add('wrong');
-            // this.removeLife(); // JBJB
+            button.classList.add('wrong');
+            this.removeLife();
         }
     }
     
@@ -80,7 +80,23 @@ class Game {
      * Displays a message contingent on whether the player won or lost the round
      */
     gameOver () {
+        // Show the start screen overlay
+        document.querySelector('#overlay').style.display = 'block';
         
+        let endMsg = '';
+        let newClass = '';
+        if (this.missed === 5) {
+            // Player Lost
+            endMsg = 'You Lost :( Please Play Again!';
+            newClass = 'lose';
+        } else {
+            // Player Won
+            endMsg = 'Congratulations! You Got It!';
+            newClass = 'win';
+        }
+        
+        document.querySelector('h1#game-over-message').textContent = endMsg;
+        document.querySelector('div#overlay').className = newClass;
     }
     
     /**
@@ -88,7 +104,17 @@ class Game {
      * Swaps a 'live heart' icon for a 'dead heart' icon and increments the player's `missed` property.
      */
     removeLife () {
-        /* [] If the player has five missed guesses (i.e they're out of lives), then end the game by calling the gameOver() method. */
+        // Swap a liveHeart icon for a lostHeart icon
+        const heart = document.querySelector('img[src="images/liveHeart.png"]');
+        heart.setAttribute('src','images/lostHeart.png');
+        
+        // Increment the `missed` property
+        this.missed += 1;
+        
+        // If the player has five missed guesses, end the game
+        if (this.missed === 5) {
+            this.gameOver();
+        }
     }
     
 }
