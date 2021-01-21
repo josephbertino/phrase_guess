@@ -17,7 +17,7 @@ The player clicks an onscreen keyboard to guess letters in the phrase. If the le
 
 A player continues to select letters until they guess the phrase (and win), or make five incorrect guesses (and lose).
 
-If the player completes the phrase before they run out of guesses, a winning screen appears. If the player guesses incorrectly five times, a losing screen appears.
+If the player completes the phrase before they run out of guesses, a winning screen appears. If the player guesses incorrectly five times, a losing screen appears. They may then re-start the game for another fun round!
 
 A player can guess a letter only once. After they’ve guessed a letter, the program disables that letter on the onscreen keyboard. 
 
@@ -32,3 +32,5 @@ A player can guess a letter only once. After they’ve guessed a letter, the pro
 * I made a CSS specification for ".lose > h1"
 
 3. If the player loses the round, I changed the background color of the '#overlay' element to 'lightcoral'
+
+4. The player can also choose letters to play by using their keyboard! Don't worry... letters that have already been guessed will be disabled on both the keybaord and the mouse UI for the remainder of the round.

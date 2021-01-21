@@ -195,6 +195,7 @@ button {
   color: var(--color-win);
 }
 
+/* Rainbox text effect adopted from [https://w3bits.com/rainbow-text/] */
 .win > h1 {
    background-image: linear-gradient(to left, violet, indigo, blue, green, 60%, orange, 70%, red);
    -webkit-background-clip: text;
