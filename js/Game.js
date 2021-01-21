@@ -21,21 +21,21 @@ class Game {
     }
     
     /**
-     * Executes a few steps necessary for setting up a new game
+     * Execute necessary steps for setting up a new round of this game
      */
     startGame () {
         // Hide the start screen overlay
         document.querySelector('#overlay').style.display = 'none';
         
-        // Call the getRandomPhrase method to set mystery phrase of this round
+        // Call the getRandomPhrase method to select mystery phrase for this round
         this.activePhrase = this.getRandomPhrase();
         
-        // Add this.activePhrase to the board 
+        // Draws this.activePhrase to the board 
         this.activePhrase.addPhraseToDisplay();
     }
     
     /**
-     * Randomly retrieves one of the phrases stored in the phrases array and returns it.
+     * Randomly retrieves one of the phrase objects stored in the this.phrases array and returns it.
      */
     getRandomPhrase () {
         const idx = Math.floor(Math.random() * this.phrases.length);
@@ -43,11 +43,11 @@ class Game {
     }
     
     /**
-     * This method controls most of the game logic.
+     * Checks player letter selection and updates the game state and phrase display accordingly
      * @param   {Object}    button  The object linked to the button clicked by the user
      */ 
     handleInteraction (button) {
-        // Disable the button onscreen
+        // Disable the selected letter's onscreen button
         button.disabled = true;
         
         const letter = button.textContent;
@@ -57,12 +57,30 @@ class Game {
             button.classList.add('chosen');
             this.activePhrase.showMatchedLetter(letter); 
             if (this.checkForWin()) {
-                console.log('you win');
-                this.gameOver();
+                this.gameOver(true);
             }
         } else {
+            // Player guessed wrong. Ding them.
             button.classList.add('wrong');
             this.removeLife();
+        }
+    }
+    
+    /**
+     * Removes a life from the scoreboard
+     * Swaps a 'live heart' icon for a 'dead heart' icon and increments the game's `missed` property.
+     */
+    removeLife () {
+        // Swap a liveHeart icon for a lostHeart icon
+        const heart = document.querySelector('img[src="images/liveHeart.png"]');
+        heart.setAttribute('src','images/lostHeart.png');
+        
+        // Increment the `missed` property
+        this.missed += 1;
+        
+        // If the player has five missed guesses, end the game
+        if (this.missed === 5) {
+            this.gameOver(false);
         }
     }
     
@@ -78,43 +96,53 @@ class Game {
     /**
      * Handles end-of-game behavior.
      * Displays a message contingent on whether the player won or lost the round
+     * @param   {Boolean}   won Boolean value indicating whether player won
      */
-    gameOver () {
+    gameOver (won) {
         // Show the start screen overlay
-        document.querySelector('#overlay').style.display = 'block';
+        document.querySelector('#overlay').style.display = '';
         
+        // Set end-of-game message
         let endMsg = '';
         let newClass = '';
-        if (this.missed === 5) {
-            // Player Lost
-            endMsg = 'You Lost :( Please Play Again!';
-            newClass = 'lose';
-        } else {
-            // Player Won
+        if (won) {
+            // Player won
             endMsg = 'Congratulations! You Got It!';
             newClass = 'win';
+        } else {
+            // Player lost
+            endMsg = 'You Lost :( Please Play Again!';
+            newClass = 'lose';
         }
         
-        document.querySelector('h1#game-over-message').textContent = endMsg;
+        // Display the end-of-game message to the user
+        document.querySelector('h1').textContent = endMsg;
         document.querySelector('div#overlay').className = newClass;
+        
+        // Reset the game board
+        this.resetGame();
     }
     
     /**
-     * Removes a life from the scoreboard
-     * Swaps a 'live heart' icon for a 'dead heart' icon and increments the player's `missed` property.
+     * Reset game board, making it ready for new round
      */
-    removeLife () {
-        // Swap a liveHeart icon for a lostHeart icon
-        const heart = document.querySelector('img[src="images/liveHeart.png"]');
-        heart.setAttribute('src','images/lostHeart.png');
+    resetGame () {
+        // Remove all li elements from the Phrase ul element
+        document.querySelector('#phrase ul').innerHTML = '';
         
-        // Increment the `missed` property
-        this.missed += 1;
-        
-        // If the player has five missed guesses, end the game
-        if (this.missed === 5) {
-            this.gameOver();
+        // Enable all of the onscreen keyboard buttons and update their CSS class
+        const buttonGroup = document.querySelectorAll('button.key');
+        for (let btn of buttonGroup) {
+            btn.className = 'key';
+            btn.disabled = false;
         }
+        
+        // Reset all of the heart images on the scoreboard
+        const hearts = document.querySelectorAll('img[src="images/lostHeart.png"]');
+        for (let heart of hearts) {
+            heart.setAttribute('src','images/liveHeart.png');
+        }
+        
+        this.missed = 0;
     }
-    
 }

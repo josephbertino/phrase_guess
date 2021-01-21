@@ -15,12 +15,13 @@ class Phrase {
     }
     
     /**
-     * Adds letter placeholders to the game display when the game starts.
-     * Each letter is presented by an empty box, one li element for each letter.
+     * Adds letter placeholders to the display when the game starts.
+     * Each letter is presented by an empty box; one li element for each letter or space.
      */
     addPhraseToDisplay () {
         let phraseStr = '';
         
+        // Construct the series of <li> elements using a string representing HTML
         for (const letter of this.phrase) {
             phraseStr += `<li class="`;
             if (letter === ' ') {
@@ -31,6 +32,7 @@ class Phrase {
             phraseStr += `">${letter}</li>`;
         }
 
+        // Set innerHTML of <ul> element to HTML string
         document.querySelector('#phrase ul').innerHTML = phraseStr;
     }
     
@@ -44,7 +46,7 @@ class Phrase {
     
     /**
      * Reveals the letter(s) on the board that matches the player's selection.
-     * @param   {string}    letter  the letter being revealed in the phrase on the board
+     * @param   {string}    letter  The letter selected by the player, to be revealed
      */
     showMatchedLetter (letter) {
         const letterGroup = document.querySelectorAll(`.letter.${letter}`);

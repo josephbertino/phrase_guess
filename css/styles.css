@@ -5,7 +5,7 @@
 
 :root {
   --color-win: #78CF82;
-  --color-lose: #D94545;
+  --color-lose: lightcoral;
   --color-start: #5b85b7;
   --color-neutral: #445069;
   --color-neutral-light: #D2D2D2;
@@ -195,10 +195,21 @@ button {
   color: var(--color-win);
 }
 
+.win > h1 {
+   background-image: linear-gradient(to left, violet, indigo, blue, green, 60%, orange, 70%, red);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   font-weight: 900;
+}
+
 .lose {
   background-color: #f5785f;
 }
 
 .lose a {
   color: var(--color-lose);
+}
+
+.lose > h1 {
+  color: darkred;
 }
